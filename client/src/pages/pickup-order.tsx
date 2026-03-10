@@ -3,6 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Phone, MapPin, Calendar, FileText } from "lucide-react";
 
+// Replace with your Formspree form URL (from formspree.io → your form → Integration)
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xreypjzl";
+
 export default function PickupOrder() {
   const [formData, setFormData] = useState({
     name: "",
@@ -25,26 +28,55 @@ export default function PickupOrder() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     setStatusMessage(null);
     setStatusType(null);
 
-    setStatusType("success");
-    setStatusMessage(
-      "Thank you! Your pickup request has been received. We’ll contact you soon to confirm."
-    );
-    setFormData({
-      name: "",
-      phone: "",
-      address: "",
-      pickupDate: "",
-      pickupTime: "",
-      items: "",
-      notes: "",
-    });
-    setSubmitting(false);
+    try {
+      const formPayload = new FormData();
+      formPayload.append("name", formData.name);
+      formPayload.append("phone", formData.phone);
+      formPayload.append("address", formData.address);
+      formPayload.append("pickupDate", formData.pickupDate);
+      formPayload.append("pickupTime", formData.pickupTime);
+      formPayload.append("items", formData.items);
+      formPayload.append("notes", formData.notes);
+
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        body: formPayload,
+        headers: { Accept: "application/json" },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || data.error || "Request failed");
+      }
+
+      setStatusType("success");
+      setStatusMessage(
+        "Thank you! Your pickup request has been sent. We'll contact you soon to confirm."
+      );
+      setFormData({
+        name: "",
+        phone: "",
+        address: "",
+        pickupDate: "",
+        pickupTime: "",
+        items: "",
+        notes: "",
+      });
+    } catch (error) {
+      setStatusType("error");
+      setStatusMessage(
+        `Could not send request: ${error instanceof Error ? error.message : "Please try again."} Call us at (410) 867-1694 to place your order.`
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -250,7 +282,7 @@ export default function PickupOrder() {
                     className="bg-fresh-blue text-white px-8 py-2 font-semibold hover:bg-fresh-blue-dark shadow-sm w-full sm:w-auto"
                     disabled={submitting}
                   >
-                    Submit Pickup Order
+                    {submitting ? "Sending..." : "Submit Pickup Order"}
                   </Button>
                 </div>
               </form>
