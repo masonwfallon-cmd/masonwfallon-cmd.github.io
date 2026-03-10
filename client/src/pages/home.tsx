@@ -3,10 +3,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Phone, Clock, MapPin, Star, Sparkles, Settings, DollarSign, Shield, Menu, X } from "lucide-react";
 import { FaFacebookF, FaTshirt, FaWind, FaHandsWash, FaHome, FaSoap, FaTruck } from "react-icons/fa";
 import { useState } from "react";
+import { useLocation } from "wouter";
 
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [, setLocation] = useLocation();
 
   const scrollToServices = () => {
     document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
@@ -22,6 +24,10 @@ export default function Home() {
 
   const openFacebook = () => {
     window.open('https://www.facebook.com/people/Fresh-Start-Laundry-Co/61557575921146/', '_blank');
+  };
+
+  const goToPickupOrder = () => {
+    setLocation("/pickup");
   };
 
   return (
@@ -88,13 +94,21 @@ export default function Home() {
               <p className="text-xl text-gray-600 mb-8 leading-relaxed" data-testid="text-hero-description">
                 Professional laundromat services in Churchton, MD. Clean facilities, modern equipment, and affordable pricing for all your laundry needs.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-4">
                 <Button 
                   onClick={scrollToServices} 
                   className="bg-fresh-blue text-white px-8 py-4 font-semibold hover:bg-fresh-blue-dark shadow-lg"
                   data-testid="button-view-services"
                 >
                   View Our Services
+                </Button>
+                <Button 
+                  onClick={goToPickupOrder}
+                  className="bg-fresh-blue-dark text-white px-8 py-4 font-semibold hover:bg-fresh-blue shadow-lg border-2 border-fresh-blue-dark"
+                  data-testid="button-hero-pickup"
+                >
+                  <FaTruck className="mr-2 h-4 w-4" />
+                  Schedule Pickup & Delivery
                 </Button>
                 <Button 
                   variant="outline"
@@ -331,7 +345,7 @@ export default function Home() {
                 </div>
                 <h4 className="text-xl font-semibold text-gray-900 mb-3" data-testid="text-service-pickup-title">Pickup & Delivery</h4>
                 <p className="text-gray-600 mb-4" data-testid="text-service-pickup-description">Complimentary pickup and delivery service for your convenience.</p>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <div className="flex justify-between">
                     <span className="text-gray-600">All Items</span>
                     <span className="font-semibold text-fresh-blue" data-testid="text-price-pickup-delivery">$1.60/lb</span>
@@ -339,6 +353,13 @@ export default function Home() {
                   <div className="mt-3 p-3 bg-fresh-blue-light rounded-lg">
                     <p className="text-sm text-fresh-blue font-medium">Free pickup and delivery within service area</p>
                   </div>
+                  <Button
+                    onClick={goToPickupOrder}
+                    className="w-full mt-2 bg-fresh-blue text-white font-semibold hover:bg-fresh-blue-dark"
+                    data-testid="button-service-pickup-order"
+                  >
+                    Schedule Pickup & Delivery
+                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -603,6 +624,13 @@ export default function Home() {
             >
               <MapPin className="mr-2 h-4 w-4" />
               Get Directions
+            </Button>
+            <Button 
+              onClick={goToPickupOrder}
+              className="bg-fresh-blue-dark text-white px-8 py-4 font-semibold hover:bg-fresh-blue shadow-lg"
+              data-testid="button-cta-pickup"
+            >
+              Schedule Pickup & Delivery
             </Button>
           </div>
         </div>
