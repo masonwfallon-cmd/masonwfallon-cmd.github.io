@@ -669,7 +669,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p data-testid="text-copyright">&copy; 2025 Fresh Start Laundry Co. All rights reserved.</p>
+            <p data-testid="text-copyright">&copy; 2026 Fresh Start Laundry Co. All rights reserved.</p>
           </div>
         </div>
       </footer>
