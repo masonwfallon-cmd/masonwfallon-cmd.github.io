@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Phone, MapPin, Calendar, FileText } from "lucide-react";
@@ -83,7 +84,7 @@ export default function PickupOrder() {
     <div className="min-h-screen bg-gradient-to-br from-fresh-blue-light to-white">
       <header className="bg-white shadow-sm border-b border-gray-100">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
+          <Link href="/" className="flex items-center space-x-3 hover:opacity-90 transition-opacity cursor-pointer">
             <img
               src="/logo.jpg"
               alt="Fresh Start Laundry Co. Logo"
@@ -97,7 +98,7 @@ export default function PickupOrder() {
                 Pickup & Delivery Order Request
               </p>
             </div>
-          </div>
+          </Link>
           <div className="hidden sm:flex items-center space-x-4 text-sm text-gray-600">
             <div className="flex items-center">
               <Phone className="h-4 w-4 text-fresh-blue mr-2" />
