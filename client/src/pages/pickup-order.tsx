@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Phone, MapPin, Calendar, FileText } from "lucide-react";
 
 // Replace with your Formspree form URL (from formspree.io → your form → Integration)
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xreypjzl";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xlgogjlk";
 
 export default function PickupOrder() {
   const [formData, setFormData] = useState({
